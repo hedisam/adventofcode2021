@@ -2,12 +2,15 @@ package main
 
 import (
 	"fmt"
-	"github.com/srowles/adventofcode2021"
 	"math"
+
+	"github.com/srowles/adventofcode2021"
 )
 
 func main() {
-	fmt.Println(solution(day1Input()))
+	input := day1Input()
+	fmt.Println(part1(input))
+	fmt.Println(part2(input))
 }
 
 func day1Input() []int {
@@ -15,7 +18,7 @@ func day1Input() []int {
 	return adventofcode2021.MustIntList(input)
 }
 
-func solution(measurements []int) int {
+func part1(measurements []int) int {
 	count := 0
 	previous := math.MaxInt64
 	for _, depth := range measurements {
@@ -23,6 +26,22 @@ func solution(measurements []int) int {
 			count++
 		}
 		previous = depth
+	}
+	return count
+}
+
+func part2(measurements []int) int {
+	count := 0
+	previous := math.MaxInt64
+	for i := 0; i < len(measurements)-2; i++ {
+		window := 0
+		for j := i; j < i+3; j++ {
+			window += measurements[j]
+		}
+		if window > previous {
+			count++
+		}
+		previous = window
 	}
 	return count
 }
